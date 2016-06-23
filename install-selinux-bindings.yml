@@ -1,0 +1,11 @@
+---
+- hosts: all
+  remote_user: admin-user
+  sudo: yes
+  tasks:
+  - name: install selinux bindings CentOS/RHEL
+    action: yum name=libselinux-python state=present
+    when: ansible_os_family == "CentOS" or ansible_distribution == 'Red Hat Enterprise Linux'
+  - name: install selinux bindings Ubuntu/Debian
+    action: apt pkg=python-selinux state=present
+    when: ansible_distribution == 'Debian' or ansible_os_family == "Ubuntu"
